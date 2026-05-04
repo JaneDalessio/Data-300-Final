@@ -1,7 +1,6 @@
 """
 DATA 300 Final Project
-katherine_models.py — Lasso Regression & Elastic Net Regression
-Author: Katherine Robles
+Lasso Regression & Elastic Net Regression
 
 Imports clean data directly from eda.py.
 Returns results dict for main.py to aggregate.
@@ -15,7 +14,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
-from eda import run_eda
+from eda import transform_data
 
 
 def _evaluate(name, model, X_train, y_train, X_test, y_test):
@@ -31,7 +30,7 @@ def _evaluate(name, model, X_train, y_train, X_test, y_test):
     return metrics
 
 
-def run_katherine_models(X_train, X_test, y_train, y_test, tscv, feature_names):
+def run_lasso_elastic(X_train, X_test, y_train, y_test, tscv, feature_names):
     """
     Trains Lasso and Elastic Net models.
     Returns dict of test-set metrics for both models.
@@ -40,7 +39,7 @@ def run_katherine_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     # ── LASSO REGRESSION ─────────────────────────────────────────────────────────
     print("=" * 60)
-    print("LASSO REGRESSION (Katherine)")
+    print("LASSO REGRESSION")
     print("=" * 60)
 
     lasso_pipe = Pipeline([
@@ -72,16 +71,16 @@ def run_katherine_models(X_train, X_test, y_train, y_test, tscv, feature_names):
     _plot_alpha_sensitivity(
         "Lasso", lasso_params["lasso__alpha"],
         -lasso_search.cv_results_["mean_test_score"],
-        best_alpha_lasso, "#0A7E8C", "katherine_lasso_alpha.png"
+        best_alpha_lasso, "#0A7E8C", "lasso_alpha.png"
     )
 
     # Predicted vs actual
     _plot_predictions("Lasso", lasso_search.best_estimator_,
-                      X_test, y_test, "#0A7E8C", "katherine_lasso_predictions.png")
+                      X_test, y_test, "#0A7E8C", "lasso_predictions.png")
 
     # ── ELASTIC NET REGRESSION ───────────────────────────────────────────────────
     print("\n" + "=" * 60)
-    print("ELASTIC NET REGRESSION (Katherine)")
+    print("ELASTIC NET REGRESSION")
     print("=" * 60)
 
     enet_pipe = Pipeline([
@@ -112,7 +111,7 @@ def run_katherine_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     # Predicted vs actual
     _plot_predictions("Elastic Net", enet_search.best_estimator_,
-                      X_test, y_test, "#C0392B", "katherine_enet_predictions.png")
+                      X_test, y_test, "#C0392B", "enet_predictions.png")
 
     # ── Side-by-side coefficient comparison ──────────────────────────────────────
     _plot_coefficient_comparison(
@@ -122,7 +121,6 @@ def run_katherine_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     # ── Monthly RMSE breakdown ────────────────────────────────────────────────────
     _plot_monthly_rmse(
-        "Katherine",
         {"Lasso": lasso_search.best_estimator_, "ElasticNet": enet_search.best_estimator_},
         X_test, y_test,
         {"Lasso": "#0A7E8C", "ElasticNet": "#C0392B"}
@@ -196,9 +194,9 @@ def _plot_coefficient_comparison(lasso_coefs, enet_coefs, feature_names,
                 bbox=dict(boxstyle="round", facecolor="white", alpha=0.7))
 
     plt.tight_layout()
-    plt.savefig("katherine_coefficient_comparison.png", dpi=150, bbox_inches="tight")
+    plt.savefig("coefficient_comparison.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print("Saved: katherine_coefficient_comparison.png")
+    print("Saved: coefficient_comparison.png")
 
 
 def _plot_monthly_rmse(author, models, X_test, y_test, colors):
@@ -225,16 +223,16 @@ def _plot_monthly_rmse(author, models, X_test, y_test, colors):
     ax.legend()
     ax.grid(axis="y", linestyle="--", alpha=0.4)
     plt.tight_layout()
-    plt.savefig("katherine_monthly_rmse.png", dpi=150, bbox_inches="tight")
+    plt.savefig("monthly_rmse.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print("Saved: katherine_monthly_rmse.png")
+    print("Saved: monthly_rmse.png")
 
 
 # ── Standalone run ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     X_train, X_test, y_train, y_test, tscv, feature_names = run_eda(show_plots=False)
-    results = run_katherine_models(X_train, X_test, y_train, y_test, tscv, feature_names)
-    print("\nKatherine's results:")
+    results = run_lasso_elastic(X_train, X_test, y_train, y_test, tscv, feature_names)
+    print("\nResults:")
     for model, metrics in results.items():
         print(f"  {model}: {metrics}")
