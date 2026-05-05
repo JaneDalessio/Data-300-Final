@@ -38,11 +38,17 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
 
     feature_names = [
         "year", "month", "day", "day_of_week", "is_weekend",
-        "hour", "temperature", "humidity", "wind_speed", "visibility",
-        "solar_radiation", "rainfall", "snowfall", "is_holiday",
+        "rented_bike_count", "hour", "temperature", "humidity", "wind_speed",
+        "visibility", "solar_radiation", "rainfall", "snowfall", "is_holiday",
         "season_Autumn", "season_Spring", "season_Summer", "season_Winter",
-        "is_peak", "is_normal", "is_low"
-    ]
+        "rbc_1h", "rbc_2h", "rbc_3h", "rbc_24h", "rbc_48h", "rbc_168h",
+        "rbc_1h_m", "rbc_2h_m", "rbc_3h_m", "rbc_24h_m", "rbc_48h_m",
+        "rbc_168h_m", "rbc_mean_3h", "rbc_std_3h", "rbc_mean_6h",
+        "rbc_mean_12h", "rbc_mean_24h", "rbc_std_24h", "rbc_mean_48h",
+        "rbc_mean_168h", "rbc_mean_3h_m", "rbc_std_3h_m", "rbc_mean_6h_m",
+        "rbc_mean_12h_m", "rbc_mean_24h_m", "rbc_std_24h_m", "rbc_mean_48h_m",
+        "rbc_mean_168h_m", "is_peak", "is_normal", "is_low",
+        ]
  
     # Extract month values for each test row
     month_idx = feature_names.index("month")
@@ -290,6 +296,7 @@ if __name__ == "__main__":
 
     # Split data into train and test
     X_train, X_test, y_train, y_test = split(df)
+    #print(df.columns)
 
     # Run entire pipeline
     results = run_lasso_elastic(X_train, X_test, y_train, y_test)
