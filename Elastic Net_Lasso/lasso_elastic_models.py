@@ -38,7 +38,7 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
 
     feature_names = [
         "year", "month", "day", "day_of_week", "is_weekend",
-        "rented_bike_count", "hour", "temperature", "humidity", "wind_speed",
+        "hour", "temperature", "humidity", "wind_speed",
         "visibility", "solar_radiation", "rainfall", "snowfall", "is_holiday",
         "season_Autumn", "season_Spring", "season_Summer", "season_Winter",
         "rbc_1h", "rbc_2h", "rbc_3h", "rbc_24h", "rbc_48h", "rbc_168h",
