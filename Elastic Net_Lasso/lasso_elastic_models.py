@@ -55,9 +55,6 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
     # Extract month values for each test row
     month_idx   = feature_names.index("month")
     months_test = X_test[:, month_idx]
- 
-    # TimeSeriesSplit for cross-validation within training set only
-    tscv = TimeSeriesSplit(n_splits=5)
 
     # Store final results
     results = {}
@@ -78,7 +75,6 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
     # Try alpha vals using cross validation to find best one
     lasso_search = GridSearchCV(
         lasso_pipe, lasso_params,
-        cv=tscv,
         scoring="neg_root_mean_squared_error",
         n_jobs=-1
     )
@@ -138,7 +134,6 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
     # Try vals using cross validation to find best one
     enet_search = GridSearchCV(
         enet_pipe, enet_params,
-        cv=tscv,
         scoring="neg_root_mean_squared_error",
         n_jobs=-1
     )
