@@ -35,7 +35,7 @@ def transform_data(df):
     df["is_weekend"] = df["day_of_week"] > 4
     df["is_weekend"] = df["is_weekend"].astype(int)
 
-    # Moving the columns to front of the data set
+    # Moving the columns to the front of the data set
     colnames = ["year", "month", "day", "day_of_week", "is_weekend"]
     for i in range(len(colnames)):
         column = df.pop(colnames[i])
