@@ -12,7 +12,7 @@ from sklearn.metrics import mean_squared_error
 
 ## Import all three model modules and eda file
 from eda import transform_data, split
-from KNN_OLS_Models import run_jane_models
+from KNN_OLS_Models import run_KNN_OLS_models
 from aidan_models import run_aidan_models
 from lasso_elastic_models import run_lasso_elastic
 
