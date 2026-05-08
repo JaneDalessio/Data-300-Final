@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import Lasso, ElasticNet
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
 
 # Import evaluation metrics
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -48,6 +48,7 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
     # Try alpha vals using cross validation to find best one
     lasso_search = GridSearchCV(
         lasso_pipe, lasso_params,
+        cv = TimeSeriesSplit(n_splits = 3),
         scoring = "neg_root_mean_squared_error",
         n_jobs = -1
     )
@@ -104,6 +105,7 @@ def run_lasso_elastic(X_train, X_test, y_train, y_test):
     # Try vals using cross validation to find best one
     enet_search = GridSearchCV(
         enet_pipe, enet_params,
+        cv = TimeSeriesSplit(n_splits = 3),
         scoring = "neg_root_mean_squared_error",
         n_jobs = -1
     )
