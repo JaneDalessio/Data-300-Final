@@ -30,7 +30,7 @@ def _evaluate(name, model, X_train, y_train, X_test, y_test):
     return metrics
 
 
-def run_models(X_train, X_test, y_train, y_test, tscv, feature_names):
+def run_KNN_OLS_models(X_train, X_test, y_train, y_test, tscv, feature_names):
     
     # Trains OLS and KNN models, returns dict of test-set metrics for both models
     
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = split(df)
 
     # Run final models and print results
-    results = run_models(X_train, X_test, y_train, y_test, tscv, feature_names)
+    results = run_KNN_OLS_models(X_train, X_test, y_train, y_test, tscv, feature_names)
     print("\nResults:")
     for model, metrics in results.items():
         print(f"  {model}: {metrics}")
