@@ -1,11 +1,3 @@
-"""
-DATA 300 Final Project
-jane_models.py — OLS Regression & K-Nearest Neighbors Regressor
-Author: Jane Dalessio
-
-Imports clean data directly from eda.py.
-Returns results dict for main.py to aggregate.
-"""
 #Import all necessary librarys and standard modules
 import numpy as np
 import pandas as pd
@@ -23,7 +15,8 @@ from eda import transform_data, split
 def _evaluate(name, model, X_train, y_train, X_test, y_test):
     #Print and return RMSE, MAE, R² for train and test sets
     metrics = {}
-    #Calculate all of our main metrics for the general evaluate function
+    #Loops twice: once for train set, once for test set
+    #Calculates all of our main metrics for the general evaluation function
     for label, X_, y_ in [("Train", X_train, y_train), ("Test", X_test, y_test)]:
         preds = np.clip(model.predict(X_), 0, None)
         rmse  = np.sqrt(mean_squared_error(y_, preds))
@@ -35,7 +28,7 @@ def _evaluate(name, model, X_train, y_train, X_test, y_test):
     return metrics
 
 
-def run_jane_models(X_train, X_test, y_train, y_test, tscv, feature_names):
+def run_models(X_train, X_test, y_train, y_test, tscv, feature_names):
     
     #Trains OLS and KNN models, returns dict of test-set metrics for both models
     
@@ -43,10 +36,10 @@ def run_jane_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     # OLS REGRESSION 
     print("=" * 60)
-    print("OLS REGRESSION (Jane)")
+    print("OLS REGRESSION")
     print("=" * 60)
 
-    # OLS has no hyperparameters to tune — fit directly
+    # OLS has no hyperparameters to tune, have to fit directly
     ols = Pipeline([
         ("scaler", StandardScaler()),
         ("ols",    LinearRegression())
@@ -56,14 +49,14 @@ def run_jane_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     # Coefficient plot
     coefs = ols.named_steps["ols"].coef_
-    _plot_coefficients("OLS", coefs, feature_names, "#1A3A6E", "jane_ols_coefficients.png")
+    _plot_coefficients("OLS", coefs, feature_names, "#1A3A6E", "ols_coefficients.png")
 
     # Predicted vs actual
-    _plot_predictions("OLS", ols, X_test, y_test, "#1A3A6E", "jane_ols_predictions.png")
+    _plot_predictions("OLS", ols, X_test, y_test, "#1A3A6E", "ols_predictions.png")
 
     # K-NEAREST NEIGHBORS
     print("\n" + "=" * 60)
-    print("K-NEAREST NEIGHBORS REGRESSOR (Jane)")
+    print("K-NEAREST NEIGHBORS REGRESSOR")
     print("=" * 60)
 
     knn_pipe = Pipeline([
@@ -91,12 +84,12 @@ def run_jane_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     # Predicted vs actual
     _plot_predictions("KNN", knn_search.best_estimator_,
-                      X_test, y_test, "#5B8DD4", "jane_knn_predictions.png")
+                      X_test, y_test, "#5B8DD4", "knn_predictions.png")
 
     X_test_df = pd.DataFrame(X_test, columns=feature_names)
     X_test_df["Actual"] = y_test  # move this inside _plot_monthly_rmse's copy
 
-    _plot_monthly_rmse("Jane", {"OLS": ols, "KNN": knn_search.best_estimator_},
+    _plot_monthly_rmse({"OLS": ols, "KNN": knn_search.best_estimator_},
                     X_test_df, y_test,
                     {"OLS": "#1A3A6E", "KNN": "#5B8DD4"})
 
@@ -145,9 +138,9 @@ def _plot_k_sensitivity(k_values, rmse_values, best_k):
     ax.set_title("KNN — Cross-Validated RMSE vs k", fontsize=12, fontweight="bold")
     ax.legend()
     plt.tight_layout()
-    plt.savefig("jane_knn_k_sensitivity.png", dpi=150, bbox_inches="tight")
+    plt.savefig("knn_k_sensitivity.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print("Saved: jane_knn_k_sensitivity.png")
+    print("Saved: knn_k_sensitivity.png")
 
 
 def _plot_monthly_rmse(author, models, X_test, y_test, colors):
@@ -177,12 +170,12 @@ def _plot_monthly_rmse(author, models, X_test, y_test, colors):
     ax.legend()
     ax.grid(axis="y", linestyle="--", alpha=0.4)
     plt.tight_layout()
-    plt.savefig(f"jane_monthly_rmse.png", dpi=150, bbox_inches="tight")
+    plt.savefig(f"monthly_rmse.png", dpi=150, bbox_inches="tight")
     plt.close()
-    print("Saved: jane_monthly_rmse.png")
+    print("Saved: monthly_rmse.png")
 
 
-# ── Standalone run ────────────────────────────────────────────────────────────────
+#Standalone run
 
 
 
@@ -196,7 +189,7 @@ if __name__ == "__main__":
     tscv = TimeSeriesSplit(n_splits=5)
     X_train, X_test, y_train, y_test = split(df)
 
-    results = run_jane_models(X_train, X_test, y_train, y_test, tscv, feature_names)
-    print("\nJane's results:")
+    results = run_models(X_train, X_test, y_train, y_test, tscv, feature_names)
+    print("\nResults:")
     for model, metrics in results.items():
         print(f"  {model}: {metrics}")
