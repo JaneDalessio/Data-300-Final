@@ -203,7 +203,12 @@ Best alpha: 0.01
   Lasso [Train]  RMSE = 0.3507  MAE = 0.2380  R² = 0.9106
   Lasso [Test]  RMSE = 0.3681  MAE = 0.2382  R² = 0.8659
 Features zeroed out: 30 / 49
-  Zeroed features: ['year', 'month', 'day', 'day_of_week', 'snowfall', 'season_Autumn', 'season_Spring', 'season_Summer', 'rbc_1h_m', 'rbc_2h_m', 'rbc_3h_m', 'rbc_24h_m', 'rbc_48h_m', 'rbc_168h_m', 'rbc_mean_3h', 'rbc_std_3h', 'rbc_mean_6h', 'rbc_mean_12h', 'rbc_std_24h', 'rbc_mean_48h', 'rbc_mean_168h', 'rbc_mean_3h_m', 'rbc_std_3h_m', 'rbc_mean_6h_m', 'rbc_mean_12h_m', 'rbc_mean_24h_m', 'rbc_std_24h_m', 'rbc_mean_48h_m', 'rbc_mean_168h_m', 'is_normal']
+  Zeroed features: ['year', 'month', 'day', 'day_of_week', 'snowfall', 
+  'season_Autumn', 'season_Spring', 'season_Summer', 'rbc_1h_m', 'rbc_2h_m', 
+  'rbc_3h_m', 'rbc_24h_m', 'rbc_48h_m', 'rbc_168h_m', 'rbc_mean_3h', 'rbc_std_3h', 
+  'rbc_mean_6h', 'rbc_mean_12h', 'rbc_std_24h', 'rbc_mean_48h', 'rbc_mean_168h', 
+  'rbc_mean_3h_m', 'rbc_std_3h_m', 'rbc_mean_6h_m', 'rbc_mean_12h_m', 'rbc_mean_24h_m', 
+  'rbc_std_24h_m', 'rbc_mean_48h_m', 'rbc_mean_168h_m', 'is_normal']
 
 
 -ELASTIC NET REGRESSION-
