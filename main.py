@@ -1,13 +1,7 @@
 """
 DATA 300 Final Project
-main.py — Final Results, Comparison & Analysis
-Authors: Jane Dalessio, Aidan MacIntosh, Katherine Robles
-
 Calls all three model files, aggregates results,
 and produces the final comparison table and plots.
-
-Run this file for the complete project output:
-    python main.py
 """
 
 import numpy as np
@@ -44,10 +38,10 @@ def main():
     # RUN ALL THREE MODEL FILES
     jane_results      = run_jane_models(X_train, X_test, y_train, y_test)
     aidan_results     = run_aidan_models(X_train, X_test, y_train, y_test, tscv)
-    katherine_results = run_lasso_elastic_models(X_train, X_test, y_train, y_test)
+    lasso_elastic_results = run_lasso_elastic_models(X_train, X_test, y_train, y_test)
 
     # FINAL COMPARISON TABLE
-    all_results = {**jane_results, **aidan_results, **katherine_results}
+    all_results = {**jane_results, **aidan_results, **lasso_elastic_results}
 
     comparison = (
         pd.DataFrame(all_results).T
