@@ -36,12 +36,12 @@ def main():
     X_train, X_test, y_train, y_test, tscv, feature_names = run_eda(show_plots=False)
 
     # RUN ALL THREE MODEL FILES
-    jane_results      = run_jane_models(X_train, X_test, y_train, y_test)
+    KNN_OLS_results      = run_KNN_OLS_models(X_train, X_test, y_train, y_test)
     aidan_results     = run_aidan_models(X_train, X_test, y_train, y_test, tscv)
     lasso_elastic_results = run_lasso_elastic_models(X_train, X_test, y_train, y_test)
 
     # FINAL COMPARISON TABLE
-    all_results = {**jane_results, **aidan_results, **lasso_elastic_results}
+    all_results = {**KNN_OLS_results, **aidan_results, **lasso_elastic_results}
 
     comparison = (
         pd.DataFrame(all_results).T
