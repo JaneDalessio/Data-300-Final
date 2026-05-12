@@ -17,15 +17,14 @@ df = pd.read_csv("SeoulBikeData.csv", encoding = "unicode_escape")
 df = transform_data(df)
 X_train, X_test, y_train, y_test = split(df)
 
-
 # Run all models
 print("RUNNING ALL MODELS")
 print("\n")
 
+# Store all results
 lasso_elastic_results = run_lasso_elastic(X_train, X_test, y_train, y_test)
 knn_ols_results = run_KNN_OLS_models(X_train, X_test, y_train, y_test)
 sgd_ridge_results = run_sgd_ridge(X_train, X_test, y_train, y_test)
-
 
 # Combine all results
 all_results = {**knn_ols_results, **sgd_ridge_results, **lasso_elastic_results}
@@ -40,7 +39,7 @@ comparison = (
     .reset_index()
     .rename(columns = {"index": "Model"})
 )
-print("FINAL MODEL COMPARISON (ranked by test-set RMSE)")
+print("Final Model Comparison (ranked by test-set RMSE)")
 print(comparison.to_string(index = False))
 print("\n")
 
