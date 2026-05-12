@@ -3,14 +3,16 @@ DATA 300 Final Project
 Calls all three model files, aggregates results,
 and produces the final comparison table and plots.
 """
-
+# Import necessary libraries
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+
+# Import evaluation metric
 from sklearn.metrics import mean_squared_error
 
-## Import all three model modules and eda file
+# Import all three model modules and eda file
 from eda import transform_data, split
 from KNN_OLS_Models import run_KNN_OLS_models
 from aidan_models import run_aidan_models
