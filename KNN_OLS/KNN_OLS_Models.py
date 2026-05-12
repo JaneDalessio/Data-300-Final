@@ -69,7 +69,7 @@ def run_KNN_OLS_models(X_train, X_test, y_train, y_test, tscv, feature_names):
 
     knn_search = GridSearchCV(
         knn_pipe, knn_params,
-        cv=tscv,
+        cv = TimeSeriesSplit(n_splits = 3),
         scoring="neg_root_mean_squared_error",
         n_jobs=-1
     )
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = split(df)
 
     # Run final models and print results
-    results = run_KNN_OLS_models(X_train, X_test, y_train, y_test, tscv, feature_names)
+    results = run_KNN_OLS_models(X_train, X_test, y_train, y_test)
     print("\nResults:")
     for model, metrics in results.items():
         print(f"  {model}: {metrics}")
