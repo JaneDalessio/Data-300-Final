@@ -49,13 +49,7 @@ def run_KNN_OLS_models(X_train, X_test, y_train, y_test, tscv, feature_names):
     ols.fit(X_train, y_train)
     results["OLS"] = _evaluate("OLS", ols, X_train, y_train, X_test, y_test)
 
-    # Coefficient plot
-    coefs = ols.named_steps["ols"].coef_
-    _plot_coefficients("OLS", coefs, feature_names, "#1A3A6E", "ols_coefficients.png")
-
-    # Predicted vs actual
-    _plot_predictions("OLS", ols, X_test, y_test, "#1A3A6E", "ols_predictions.png")
-
+    
     # K-NEAREST NEIGHBORS
     print("\n" + "=" * 60)
     print("K-NEAREST NEIGHBORS REGRESSOR")
@@ -78,22 +72,6 @@ def run_KNN_OLS_models(X_train, X_test, y_train, y_test, tscv, feature_names):
     print(f"Best k: {best_k}")
     results["KNN"] = _evaluate("KNN", knn_search.best_estimator_,
                                 X_train, y_train, X_test, y_test)
-
-    # k vs RMSE sensitivity plot
-    cv_res = knn_search.cv_results_
-    _plot_k_sensitivity(knn_params["knn__n_neighbors"],
-                        -cv_res["mean_test_score"], best_k)
-
-    # Predicted vs actual
-    _plot_predictions("KNN", knn_search.best_estimator_,
-                      X_test, y_test, "#5B8DD4", "knn_predictions.png")
-
-    X_test_df = pd.DataFrame(X_test, columns=feature_names)
-    X_test_df["Actual"] = y_test  # move this inside _plot_monthly_rmse's copy
-
-    _plot_monthly_rmse({"OLS": ols, "KNN": knn_search.best_estimator_},
-                    X_test_df, y_test,
-                    {"OLS": "#1A3A6E", "KNN": "#5B8DD4"})
 
     return results
     
