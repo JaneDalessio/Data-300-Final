@@ -124,7 +124,7 @@ def train_lasso(X_train, Y_train):
         lasso_pipeline,
         lasso_params,
         cv = tscv,
-        scoring = "neg_root_mean_square_error",
+        scoring = "neg_root_mean_squared_error",
         n_jobs = -1
     )
 
@@ -150,7 +150,7 @@ def train_elastic_net(X_train, Y_train):
         elastic_net_pipeline,
         elastic_net_params,
         cv = tscv,
-        scoring = "neg_root_mean_square_error",
+        scoring = "neg_root_mean_squared_error",
         n_jobs = -1
     )
 
