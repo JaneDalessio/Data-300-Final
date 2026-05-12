@@ -37,9 +37,8 @@ def run_KNN_OLS_models(X_train, X_test, y_train, y_test):
     results = {}
 
     # OLS REGRESSION 
-    print("=" * 60)
     print("OLS REGRESSION")
-    print("=" * 60)
+    print("\n")
 
     # OLS has no hyperparameters to tune, have to fit directly
     ols = Pipeline([
@@ -51,9 +50,8 @@ def run_KNN_OLS_models(X_train, X_test, y_train, y_test):
 
     
     # K-NEAREST NEIGHBORS
-    print("\n" + "=" * 60)
     print("K-NEAREST NEIGHBORS REGRESSOR")
-    print("=" * 60)
+    print("\n")
 
     knn_pipe = Pipeline([
         ("scaler", StandardScaler()),
