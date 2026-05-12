@@ -12,31 +12,26 @@ from KNN_OLS_Models import run_KNN_OLS_models
 from sgd_ridge_models import run_sgd_ridge
 
 
-# ── Load and prepare data ────────────────────────────────────────────────────────
-
+# Load and prepare data
 df = pd.read_csv("SeoulBikeData.csv", encoding = "unicode_escape")
 df = transform_data(df)
 X_train, X_test, y_train, y_test = split(df)
 
 
-# ── Run all models ───────────────────────────────────────────────────────────────
-
-print("=" * 60)
+# Run all models
 print("RUNNING ALL MODELS")
-print("=" * 60)
+print("\n")
 
 lasso_elastic_results = run_lasso_elastic(X_train, X_test, y_train, y_test)
-knn_ols_results       = run_KNN_OLS_models(X_train, X_test, y_train, y_test)
-sgd_ridge_results     = run_sgd_ridge(X_train, X_test, y_train, y_test)
+knn_ols_results = run_KNN_OLS_models(X_train, X_test, y_train, y_test)
+sgd_ridge_results = run_sgd_ridge(X_train, X_test, y_train, y_test)
 
 
-# ── Combine all results ──────────────────────────────────────────────────────────
-
+# Combine all results
 all_results = {**knn_ols_results, **sgd_ridge_results, **lasso_elastic_results}
 
 
-# ── Final comparison table ───────────────────────────────────────────────────────
-
+## Final comparison table 
 comparison = (
     pd.DataFrame(all_results)
     .T
@@ -45,11 +40,7 @@ comparison = (
     .reset_index()
     .rename(columns = {"index": "Model"})
 )
-
-print("\n")
-print("=" * 60)
 print("FINAL MODEL COMPARISON (ranked by test-set RMSE)")
-print("=" * 60)
 print(comparison.to_string(index = False))
 print("\n")
 
@@ -57,8 +48,7 @@ comparison.to_csv("final_comparison.csv", index = False)
 print("Saved: final_comparison.csv")
 
 
-# ── Comparison bar chart ─────────────────────────────────────────────────────────
-
+## Comparison bar chart
 fig, axes = plt.subplots(1, 3, figsize = (15, 5))
 fig.suptitle("All Models — Test Set Performance Comparison",
              fontsize = 14, fontweight = "bold")
@@ -80,8 +70,7 @@ plt.show()
 print("Saved: final_comparison.png")
 
 
-# ── Metrics heatmap ───────────────────────────────────────────────────────────────
-# Shows all three metrics across all models in one view
+## Metrics heatmap
 # Green = good performance, Red = poor performance
 
 metrics_df = comparison.set_index("Model")[["RMSE", "MAE", "R²"]].astype(float)
