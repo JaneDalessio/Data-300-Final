@@ -20,7 +20,8 @@ This project compares six regression models for predicting hourly bike-sharing d
 Data-300-Final/
 │
 ├── EDA/                        ← Start here
-│   └── eda.py
+│   ├── eda.py
+│   └── EDA_Graphs.ipynb
 │
 ├── Model Results/              ← Final results
 │   ├── models.py
