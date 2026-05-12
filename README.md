@@ -30,7 +30,6 @@ Data-300-Final/
 ├── Gradient Descent_Ridge/     ← Work in progress / proof of work
 ├── KNN_OLS/                    ← Work in progress / proof of work
 │
-└── main.py
 ```
 
 > **Note:** The `Elastic Net_Lasso`, `Gradient Descent_Ridge`, and `KNN_OLS` folders contain earlier development work and iterations from throughout the project. They are kept as proof of work but are **not** needed to reproduce the final results. To see the final analysis, refer to the `EDA` and `Model Results` folders only.
